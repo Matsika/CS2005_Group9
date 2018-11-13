@@ -1,5 +1,5 @@
 package activityTracker;
 
 public class main {
-	int x =7;
+	int x =8;
 }
