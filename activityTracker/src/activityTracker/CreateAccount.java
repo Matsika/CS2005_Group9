@@ -1,0 +1,187 @@
+package activityTracker;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.*;
+import java.io.IOException;
+import java.util.Scanner;
+import java.io.FileWriter;
+
+
+
+/**
+ *
+ * @author TinotendaMatsika
+ */
+public class CreateAccount {
+    private String userName;
+    private String password;
+    private int age;
+    private double height;
+    private double weight;
+    
+    public CreateAccount(String userName,String password,int age,double height,double weight)
+    {
+        this.userName= userName;
+        this.password=password;
+        this.age=age;
+        this.height=height;
+        this.weight = weight;
+    }  
+    
+    public String getUserName()
+    {
+        return userName;
+    } 
+    
+    public String getPassword()
+    {
+        return password;
+    }  
+    
+    public int getAge()
+    {
+        return age;
+    } 
+    
+    public double getHeight()
+    {
+        return height;
+    } 
+    
+    public double getWeight()
+    {
+        return weight;
+    } 
+    
+    public void setUserName(String userName)
+    {
+        this.userName = userName;
+    }  
+    
+    public void setPassword(String password)
+    {
+        this.password = password;
+    } 
+    
+    public void setAge(int age)
+    {
+        this.age = age;
+    }   
+    
+    public void setHeight(double height)
+    {
+        this.height = height;
+    }  
+    
+    public void setWeight(double weight)
+    {
+        this.weight = weight;
+    }  
+    
+    //verify password
+    public boolean verifyPassword(String password)
+    {
+        int specialCharacters = 0;
+        int digitCount=0;
+        int upperCaseChars = 0;
+        int lowerCaseChars = 0;
+        
+        //password must be at least 8 characters long
+        if(password.length() < 8)
+        {
+            return false;
+        } 
+        else
+        {
+            for(int i=0 ; i < password.length(); i++)  
+            {
+                char c = password.charAt(i);
+                if(Character.isUpperCase(c))
+                {
+                   upperCaseChars++;
+                }
+                if(Character.isLowerCase(c))
+                {    
+                   lowerCaseChars++; 
+                }
+              
+                if(Character.isDigit(c))
+                {
+                    digitCount++;
+                }
+                Pattern p = Pattern.compile("[^A-Za-z0-9]");
+                Matcher m = p.matcher(password);  
+                boolean b = m.find();
+                if(b == true)
+                {
+                    specialCharacters++;
+                } 
+                
+            } 
+            //for the password to be valid it should have a least one uppercase letter,
+            //one lowercase letter,at least one special character and at least one digit
+            if(upperCaseChars >= 1 && lowerCaseChars >=1 && digitCount >=1 && specialCharacters >=1)
+            {
+                return true;
+            } 
+            else
+            {
+                return false;
+            }     
+        }    
+        
+    }  
+    
+    
+    
+    public void verifyUserName(String Username)
+    {
+        File inputFile = new File("UserNameDatabase.txt");
+        try 
+        {
+            Scanner in = new Scanner(inputFile);
+            
+            while(in.hasNextLine())
+            {
+               String line = in.nextLine();
+               if(password.equals(line))
+               {
+                   System.out.println("Sorry that user name is taken");
+               }
+               else
+               {
+                   try
+                   {   
+                       File f = new File("UserNameDatabase.txt");
+                       FileWriter fw = new FileWriter(f);
+                       BufferedWriter bw = new BufferedWriter(fw);
+                       bw.append(password);
+                       bw.close();   
+                   }
+                   catch(IOException e)
+                   {
+                       System.out.println(e.getMessage());
+                   }        
+               }    
+            }
+            in.close();
+        } 
+        catch (FileNotFoundException ex) 
+        {
+            System.out.println("File Not Found");
+        } 
+        
+    }
+    
+    
+    public static void main(String[] args)
+    {        
+        CreateAccount newAccount = new CreateAccount("Emily","Lily!2507",21,148,38);
+       
+       
+       
+    }    
+}
