@@ -15,8 +15,12 @@ import java.io.FileWriter;
  *
  * @author TinotendaMatsika
  */
-public class CreateAccount {
-    private String userName;
+public class CreateAccount implements java.io.Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String userName;
     private String password;
     private int age;
     private double height;
