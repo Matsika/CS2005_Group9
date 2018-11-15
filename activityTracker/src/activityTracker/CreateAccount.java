@@ -29,6 +29,7 @@ public class CreateAccount {
         this.age=age;
         this.height=height;
         this.weight = weight;
+        
     }  
     
     public String getUserName()
@@ -137,7 +138,7 @@ public class CreateAccount {
     
     
     
-    public void verifyUserName(String Username)
+    public boolean verifyUserName(String Username)
     {
         File inputFile = new File("UserNameDatabase.txt");
         try 
@@ -150,6 +151,7 @@ public class CreateAccount {
                if(password.equals(line))
                {
                    System.out.println("Sorry that user name is taken");
+                   return false;
                }
                else
                {
@@ -158,7 +160,7 @@ public class CreateAccount {
                        File f = new File("UserNameDatabase.txt");
                        FileWriter fw = new FileWriter(f);
                        BufferedWriter bw = new BufferedWriter(fw);
-                       bw.append(password);
+                       bw.append(userName);
                        bw.close();   
                    }
                    catch(IOException e)
@@ -172,6 +174,7 @@ public class CreateAccount {
         catch (FileNotFoundException ex) 
         {
             System.out.println("File Not Found");
+            return false;
         } 
         
     }
