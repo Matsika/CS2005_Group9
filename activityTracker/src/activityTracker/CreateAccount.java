@@ -24,6 +24,7 @@ public class CreateAccount implements java.io.Serializable{
     private String password;
     private int age;
     private double height;
+    //
     private double weight;
     
     public CreateAccount(String userName,String password,int age,double height,double weight)
