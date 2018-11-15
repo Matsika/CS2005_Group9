@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.*;
 //test
-
+//
 public class loginUI  {
 	
 	public static void main(String[]args) {
