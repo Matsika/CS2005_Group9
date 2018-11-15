@@ -1,3 +1,5 @@
+package activityTracker;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -58,6 +60,7 @@ public class Login {
         catch(FileNotFoundException ex)
         {
               System.out.println("File not Found");
-        }        
+        }   
+        return true;
     }        
 }
