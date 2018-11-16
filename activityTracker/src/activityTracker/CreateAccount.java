@@ -29,11 +29,29 @@ public class CreateAccount implements java.io.Serializable{
     
     public CreateAccount(String userName,String password,int age,double height,double weight)
     {
-        this.userName= userName;
-        this.password=password;
-        this.age=age;
-        this.height=height;
-        this.weight = weight;
+    	if(verifyPassword(password) && verifyUserName(userName)) {
+    		this.userName= userName;
+    		this.password=password;
+    		this.age=age;
+    		this.height=height;
+    		this.weight = weight;
+    		PrintWriter out = null;
+    		try {
+    		    out = new PrintWriter(new BufferedWriter(new FileWriter("UserNameDatabase.txt", true)));
+    		    out.println(userName);
+    		}catch (IOException e) {
+    		    System.err.println(e);
+    		}finally{
+    		    if(out != null){
+    		        out.close();
+    		    }
+    		}  
+    		
+    	}
+    	else {
+    		System.out.println("Not Good Enough");
+    	}
+        
         
     }  
     
@@ -121,7 +139,7 @@ public class CreateAccount implements java.io.Serializable{
                 Pattern p = Pattern.compile("[^A-Za-z0-9]");
                 Matcher m = p.matcher(password);  
                 boolean b = m.find();
-                if(b == true)
+                if(b)
                 {
                     specialCharacters++;
                 } 
@@ -153,7 +171,7 @@ public class CreateAccount implements java.io.Serializable{
             while(in.hasNextLine())
             {
                String line = in.nextLine();
-               if(password.equals(line))
+               if(Username.equals(line))
                {
                    System.out.println("Sorry that user name is taken");
                    return false;
@@ -179,7 +197,8 @@ public class CreateAccount implements java.io.Serializable{
         catch (FileNotFoundException ex) 
         {
             System.out.println("File Not Found");
-            return false;
+            
+            return true;
         } 
         return true;
     }

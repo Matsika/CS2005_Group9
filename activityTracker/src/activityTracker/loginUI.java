@@ -7,6 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import activityTracker.CreateAccount;
 
 //test
 
@@ -24,9 +27,19 @@ public class loginUI  {
 		JPanel button = new JPanel();
         JButton CreateAccount = new JButton("Create Account");
         CreateAccount.setFont(new Font("Serif",Font.PLAIN,27));
+        
         button.add(CreateAccount);
         JButton Login = new JButton("LogIn");
         Login.setFont(new Font("Serif",Font.PLAIN,27));
+        
+        Login.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click) {
+				logIn();
+			}
+					
+		});
+        
         button.add(Login);
         
         JPanel textFields = new JPanel();
@@ -44,6 +57,14 @@ public class loginUI  {
         textFields.add(passwordLabel);
         textFields.add(passwordTextField, BorderLayout.SOUTH);
         
+        CreateAccount.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click) {
+				createAccount(usernameTextField.getText(), passwordTextField.getText());
+			}
+					
+		});
+        
         
         
         p.add(button, BorderLayout.NORTH);
@@ -54,7 +75,15 @@ public class loginUI  {
 		frame.setVisible(true);
 		
 	}
-  
-        
+	
+	public static void logIn() {
+		int i = 6;
 	}
+	
+	public static void createAccount(String username, String password) {
+		CreateAccount next = new CreateAccount(username , password,0,0,0);
+		System.out.println(next.getUserName());
+	}
+        
+}
 
