@@ -13,7 +13,7 @@ import activityTracker.CreateAccount;
 
 //test
 
-public class loginUI  {
+public class loginUI implements ActionListener {
 	
 	public static void main(String[]args) {
 		JFrame frame = new JFrame("Activity Tracker");
@@ -27,8 +27,8 @@ public class loginUI  {
 		JPanel button = new JPanel();
         JButton CreateAccount = new JButton("Create Account");
         CreateAccount.setFont(new Font("Serif",Font.PLAIN,27));
-        
         button.add(CreateAccount);
+		
         JButton Login = new JButton("LogIn");
         Login.setFont(new Font("Serif",Font.PLAIN,27));
         
@@ -41,6 +41,13 @@ public class loginUI  {
 		});
         
         button.add(Login);
+		
+	//need an actionevent listener for the synchronize button
+        //not sure how to do this
+        JButton Synchronize = new JButton("Synchronize");
+        Synchronize.setFont(new Font("Serif",Font.PLAIN,27));
+        button.add(Synchronize);
+		
         
         JPanel textFields = new JPanel();
         textFields.setLayout(new BoxLayout(textFields, BoxLayout.Y_AXIS));
