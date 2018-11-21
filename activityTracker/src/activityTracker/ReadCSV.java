@@ -18,7 +18,7 @@ public class ReadCSV
    
     public static void main(String[] args) throws FileNotFoundException 
     {
-    	File myFile = new File("C:\\Users\\TinotendaMatsika\\git\\CS2005_Group9Final\\activityTracker\\src\\activityTracker\\InputFormat.csv") 
+    	File myFile = new File("C:\\Users\\TinotendaMatsika\\git\\CS2005_Group9Final\\activityTracker\\src\\activityTracker\\InputFormat.csv");
     	BufferedReader fileReader= null;
         try
         {
