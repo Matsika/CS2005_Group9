@@ -1,4 +1,4 @@
-package activityTracker;
+
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -9,11 +9,12 @@ import javax.swing.JTextField;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import activityTracker.CreateAccount;
+//import CreateAccount;
+//import ReadCSV;
 
 //test
 
-public class loginUI implements ActionListener {
+public class loginUI {
 	
 	public static void main(String[]args) {
 		JFrame frame = new JFrame("Activity Tracker");
@@ -22,7 +23,7 @@ public class loginUI implements ActionListener {
 		frame.setPreferredSize(new Dimension(800,600));	
 		
 		JPanel p = new JPanel(new BorderLayout());
-		p.setBackground(Color.CYAN);
+		p.setBackground(Color.gray);
 		
 		JPanel button = new JPanel();
         JButton CreateAccount = new JButton("Create Account");
@@ -32,21 +33,8 @@ public class loginUI implements ActionListener {
         JButton Login = new JButton("LogIn");
         Login.setFont(new Font("Serif",Font.PLAIN,27));
         
-        Login.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent click) {
-				logIn();
-			}
-					
-		});
-        
         button.add(Login);
 		
-	//need an actionevent listener for the synchronize button
-        //not sure how to do this
-        JButton Synchronize = new JButton("Synchronize");
-        Synchronize.setFont(new Font("Serif",Font.PLAIN,27));
-        button.add(Synchronize);
 		
         
         JPanel textFields = new JPanel();
@@ -64,10 +52,46 @@ public class loginUI implements ActionListener {
         textFields.add(passwordLabel);
         textFields.add(passwordTextField, BorderLayout.SOUTH);
         
+        JPanel loggedInView = new JPanel();
+        loggedInView.setLayout(new BoxLayout(loggedInView, BoxLayout.Y_AXIS));
+        loggedInView.setEnabled(false);
+        JButton Synchronize = new JButton("Synchronize");
+        Synchronize.setFont(new Font("Serif",Font.PLAIN,27));
+        loggedInView.add(Synchronize, BorderLayout.NORTH);
+        frame.add(Synchronize);
+        
         CreateAccount.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent click) {
 				createAccount(usernameTextField.getText(), passwordTextField.getText());
+			}
+					
+		});
+        
+        Login.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click) {
+				if(logIn(usernameTextField.getText(), passwordTextField.getText())) {
+					System.out.println("here");
+					textFields.setVisible(false);
+					button.setVisible(false);
+					loggedInView.setEnabled(true);
+					frame.add(loggedInView);
+					loggedInView.add(Synchronize);
+					frame.repaint();
+					
+					ReadCSV reader = new ReadCSV();
+					
+				}
+			}
+					
+		});
+        
+        Synchronize.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click) {
+				ReadCSV reader = new ReadCSV();
+				//List newData = reader.read();
 			}
 					
 		});
@@ -83,13 +107,20 @@ public class loginUI implements ActionListener {
 		
 	}
 	
-	public static void logIn() {
-		int i = 6;
+	public static boolean logIn(String username, String password) {
+		Login logger = new Login(username, password);
+		if (logger.verifyAccountDetails()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+		
 	}
 	
 	public static void createAccount(String username, String password) {
 		CreateAccount next = new CreateAccount(username , password,0,0,0);
-		System.out.println(next.getUserName());
 	}
         
 }
