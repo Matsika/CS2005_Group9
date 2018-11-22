@@ -1,3 +1,4 @@
+package activityTracker;
 
 public class ActivityData 
 {
@@ -56,7 +57,7 @@ public class ActivityData
     
     public String toString()
     {
-        return "ElapsedTime: " + elapsedTime + "Distance: " + distance + "Altitude: " + altitude + "Date: " + date;
+        return "ElapsedTime: " + elapsedTime + "  " + " Distance: " + distance + "  " + " Altitude: " + altitude + "  " +  " Date: " + date;
     }        
 
 }

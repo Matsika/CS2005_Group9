@@ -1,3 +1,5 @@
+package activityTracker;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.File;
@@ -15,10 +17,15 @@ public class ReadCSV
     private static final int ALTITUDE = 2;
     private static final int DATE = 3;
     
+    public ReadCSV() {
+    	
+    }
    
     public static void main(String[] args) throws FileNotFoundException 
     {
-    	File myFile = new File("C:\\Users\\TinotendaMatsika\\git\\CS2005_Group9Final\\activityTracker\\src\\activityTracker\\InputFormat.csv");
+    	//I used the path where the file is located in my computer
+    	//can change the path
+    	File myFile = new File("/Users/TinotendaMatsika/git/CS2005_Group9FinalP/activityTracker/src/activityTracker/InputFormat.csv");
     	BufferedReader fileReader= null;
         try
         {
@@ -34,7 +41,7 @@ public class ReadCSV
                 if (tokens.length > 0)
                 {
                     
-                    ActivityData data = new ActivityData(Integer.parseInt(tokens[ELAPSEDTIME]),Integer.parseInt(tokens[DISTANCE]),Double.parseDouble(tokens[ALTITUDE]),tokens[DATE]);
+                    ActivityData data = new ActivityData(Integer.parseInt(tokens[ELAPSEDTIME]), Integer.parseInt(tokens[DISTANCE]), Double.parseDouble(tokens[ALTITUDE]), tokens[DATE]);
                     activeData.add(data);
                 }    
             }
