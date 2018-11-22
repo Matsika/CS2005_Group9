@@ -42,6 +42,19 @@ public class loginUI  {
         
         button.add(Login);
         
+        JButton Synchronize = new JButton("Synchronize");
+        Synchronize.setFont(new Font("Serif", Font.PLAIN,27));
+        
+        Synchronize.addActionListener(new ActionListener()
+        		{
+        			public void actionPerformed(ActionEvent click)
+        			{
+        				ReadCSV();
+        			}
+        	
+        		});
+        button.add(Synchronize);
+        
         JPanel textFields = new JPanel();
         textFields.setLayout(new BoxLayout(textFields, BoxLayout.Y_AXIS));
         JTextField usernameTextField = new JTextField(30);
@@ -78,6 +91,11 @@ public class loginUI  {
 	
 	public static void logIn() {
 		int i = 6;
+	}
+	
+	public static void ReadCSV() {
+		//do something here that gets the data from the CSV file
+		//not sure how to do this yet
 	}
 	
 	public static void createAccount(String username, String password) {
