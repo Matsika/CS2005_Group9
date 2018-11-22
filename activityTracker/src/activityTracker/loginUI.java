@@ -43,8 +43,6 @@ public class loginUI  {
         
         button.add(Login);
         
-        JButton Synchronize = new JButton("Synchronize");
-        Synchronize.setFont(new Font("Serif", Font.PLAIN,27));
         
         
         
