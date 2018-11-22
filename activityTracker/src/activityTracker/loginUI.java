@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import activityTracker.CreateAccount;
+import activityTracker.ReadCSV;
 
 //test
 
@@ -45,15 +46,8 @@ public class loginUI  {
         JButton Synchronize = new JButton("Synchronize");
         Synchronize.setFont(new Font("Serif", Font.PLAIN,27));
         
-        Synchronize.addActionListener(new ActionListener()
-        		{
-        			public void actionPerformed(ActionEvent click)
-        			{
-        				ReadCSV();
-        			}
-        	
-        		});
-        button.add(Synchronize);
+        
+        
         
         JPanel textFields = new JPanel();
         textFields.setLayout(new BoxLayout(textFields, BoxLayout.Y_AXIS));
@@ -93,10 +87,7 @@ public class loginUI  {
 		int i = 6;
 	}
 	
-	public static void ReadCSV() {
-		//do something here that gets the data from the CSV file
-		//not sure how to do this yet
-	}
+	
 	
 	public static void createAccount(String username, String password) {
 		CreateAccount next = new CreateAccount(username , password,0,0,0);
