@@ -45,6 +45,7 @@ public class ReadCSV
                     activeData.add(data);
                 }    
             }
+            
             for(ActivityData data: activeData)
             {
             	if(data.getElapsedTime() == 150) {
