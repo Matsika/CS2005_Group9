@@ -2,8 +2,10 @@ package activityTracker;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
@@ -107,11 +109,18 @@ public class loginUI {
 				ReadCSV reader = new ReadCSV();
 				
 				try {
-					String data[][] = ReadCSV.read();
+					Object[][] data = ReadCSV.read();
 					System.out.println(data[0][0].toString());
 					System.out.println(data[1].toString());
-					String[] headers = { "Time", "Distance", "Altitude", "Date", "Altitude Gained", "Altitude Lost" };
+					String[] headers = { "Time",
+							"Distance",
+							"Altitude", 
+							"Date", 
+							"Altitude Gained",
+							"Altitude Lost" };
+					
 					JTable dataTable = new JTable(data,headers);
+					
 					loggedInView.add(dataTable);
 					loggedInView.revalidate();
 					loggedInView.repaint();
