@@ -43,7 +43,7 @@ public class ReadCSV
                     
                     ActivityData data = new ActivityData(Integer.parseInt(tokens[ELAPSEDTIME]), Integer.parseInt(tokens[DISTANCE]), Double.parseDouble(tokens[ALTITUDE]), tokens[DATE]);
                     activeData.add(data);
-                    //.
+                    
                 }    
             }
             
