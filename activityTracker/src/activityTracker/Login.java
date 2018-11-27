@@ -1,4 +1,4 @@
-package activityTracker;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,21 +46,32 @@ public class Login {
         this.password = password;
     }        
     
-    public boolean verifyAccountDetails(String password,String userName)
+    public boolean verifyAccountDetails()
     {
-        File inputFile = new File("CurrentUsersData.txt");
+        File inputFile = new File("UserNameDatabase.txt");
         try
         {
            Scanner in = new Scanner(inputFile);
            while(in.hasNextLine())
            {
                String line = in.nextLine();
-           }    
+               String splitted[] =line.split(",",3);
+               if(splitted[0].equals(this.userName) && splitted[1].equals(this.password)) {
+            	   System.out.println("you are in");
+            	   in.close();
+            	   return true;
+               }
+               else {
+            	   System.out.println(splitted[0] + this.userName);
+               }
+           } 
+           in.close();
         } 
         catch(FileNotFoundException ex)
         {
               System.out.println("File not Found");
         }   
-        return true;
+        
+        return false;
     }        
 }

@@ -1,4 +1,4 @@
-package activityTracker;
+
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,6 +26,7 @@ public class CreateAccount implements java.io.Serializable{
     private double height;
     //
     private double weight;
+    private String toString;
     
     public CreateAccount(String userName,String password,int age,double height,double weight)
     {
@@ -35,17 +36,31 @@ public class CreateAccount implements java.io.Serializable{
     		this.age=age;
     		this.height=height;
     		this.weight = weight;
-    		PrintWriter out = null;
+    		this.toString = userName + "," + password + "," + age + "," + height + "," + weight;
+    		BufferedWriter out = null;
+    		
+
     		try {
-    		    out = new PrintWriter(new BufferedWriter(new FileWriter("UserNameDatabase.txt", true)));
-    		    out.println(userName);
-    		}catch (IOException e) {
-    		    System.err.println(e);
-    		}finally{
-    		    if(out != null){
-    		        out.close();
-    		    }
-    		}  
+    		    FileWriter fstream = new FileWriter("UserNameDatabase.txt", true); //true tells to append data.
+    		    out = new BufferedWriter(fstream);
+    		    out.write(this.toString);
+    		    out.newLine();
+    		}
+
+    		catch (IOException e) {
+    		    System.err.println("Error: " + e.getMessage());
+    		}
+
+    		finally {
+    		    
+    		    try {
+					out.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    		    
+    		}
     		
     	}
     	else {
@@ -171,25 +186,15 @@ public class CreateAccount implements java.io.Serializable{
             while(in.hasNextLine())
             {
                String line = in.nextLine();
-               if(Username.equals(line))
+               String splitted[] = line.split(",",2);
+               if(Username.equals(splitted[0]))
                {
                    System.out.println("Sorry that user name is taken");
                    return false;
                }
                else
                {
-                   try
-                   {   
-                       File f = new File("UserNameDatabase.txt");
-                       FileWriter fw = new FileWriter(f);
-                       BufferedWriter bw = new BufferedWriter(fw);
-                       bw.append(userName);
-                       bw.close();   
-                   }
-                   catch(IOException e)
-                   {
-                       System.out.println(e.getMessage());
-                   }        
+                         
                }    
             }
             in.close();
@@ -206,7 +211,7 @@ public class CreateAccount implements java.io.Serializable{
     
     public static void main(String[] args)
     {        
-        CreateAccount newAccount = new CreateAccount("Emily","Lily!2507",21,148,38);
+        //CreateAccount newAccount = new CreateAccount("Emily","Lily!2507",21,148,38);
        
        
        
