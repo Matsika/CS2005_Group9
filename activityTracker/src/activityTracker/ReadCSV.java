@@ -29,7 +29,7 @@ public class ReadCSV
     	BufferedReader fileReader= null;
         try
         {
-            List activeData = new ArrayList();
+            ArrayList<ActivityData> activeData = new ArrayList<ActivityData>();
             
             String line = "";
             fileReader = new BufferedReader(new FileReader(myFile));
@@ -45,9 +45,12 @@ public class ReadCSV
                     activeData.add(data);
                 }    
             }
-            for(Object data: activeData)
+            for(ActivityData data: activeData)
             {
-                System.out.println(data.toString());
+            	if(data.getElapsedTime() == 150) {
+
+                    System.out.println(data.toString());
+            	}
             }    
 
         }
