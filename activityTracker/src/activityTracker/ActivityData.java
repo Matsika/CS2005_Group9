@@ -56,18 +56,15 @@ public class ActivityData
     }
     
     public String toString()
-    {
-<<<<<<< HEAD
-        return "ElapsedTime: " + elapsedTime + "  " + " Distance: " + distance + "  " + " Altitude: " + altitude + "  " +  " Date: " + date;
-    }        
-=======
+    {    
+
         return "ElapsedTime: " + elapsedTime + " Distance: " + distance + " Final Altitude: " + altitude + " Date: " + date;
     }     
+    
     
     public String[] justData() {
     	String[] dataThing = {Integer.toString(elapsedTime), Integer.toString(distance), Double.toString(altitude), date};
     	return dataThing;
     }
->>>>>>> branch 'final' of https://github.com/macp6/CS2005_Group9.git
 
 }

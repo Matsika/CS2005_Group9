@@ -1,4 +1,4 @@
-
+package activityTracker;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -11,16 +11,16 @@ import javax.swing.JTextField;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-<<<<<<< HEAD
+
 import activityTracker.CreateAccount;
 import activityTracker.ReadCSV;
-=======
+
 //import CreateAccount;
 //import ReadCSV;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
->>>>>>> branch 'final' of https://github.com/macp6/CS2005_Group9.git
+
 
 //test
 

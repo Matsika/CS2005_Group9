@@ -1,4 +1,4 @@
-
+package activityTracker;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -160,6 +160,7 @@ public class CreateAccount implements java.io.Serializable{
                 } 
                 
             } 
+            
             //for the password to be valid it should have a least one uppercase letter,
             //one lowercase letter,at least one special character and at least one digit
             if(upperCaseChars >= 1 && lowerCaseChars >=1 && digitCount >=1 && specialCharacters >=1)
