@@ -56,7 +56,12 @@ public class ActivityData
     
     public String toString()
     {
-        return "ElapsedTime: " + elapsedTime + "Distance: " + distance + "Altitude: " + altitude + "Date: " + date;
-    }        
+        return "ElapsedTime: " + elapsedTime + " Distance: " + distance + " Final Altitude: " + altitude + " Date: " + date;
+    }     
+    
+    public String[] justData() {
+    	String[] dataThing = {Integer.toString(elapsedTime), Integer.toString(distance), Double.toString(altitude), date};
+    	return dataThing;
+    }
 
 }

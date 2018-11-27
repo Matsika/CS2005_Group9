@@ -4,6 +4,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.*;
@@ -11,6 +13,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //import CreateAccount;
 //import ReadCSV;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 //test
 
@@ -58,7 +63,7 @@ public class loginUI {
         JButton Synchronize = new JButton("Synchronize");
         Synchronize.setFont(new Font("Serif",Font.PLAIN,27));
         loggedInView.add(Synchronize, BorderLayout.NORTH);
-        frame.add(Synchronize);
+        frame.add(loggedInView);
         
         CreateAccount.addActionListener(new ActionListener()
 		{
@@ -80,7 +85,7 @@ public class loginUI {
 					loggedInView.add(Synchronize);
 					frame.repaint();
 					
-					ReadCSV reader = new ReadCSV();
+					
 					
 				}
 			}
@@ -91,10 +96,27 @@ public class loginUI {
 		{
 			public void actionPerformed(ActionEvent click) {
 				ReadCSV reader = new ReadCSV();
-				//List newData = reader.read();
+				
+				try {
+					String data[][] = ReadCSV.read();
+					System.out.println(data[0][0].toString());
+					System.out.println(data[1].toString());
+					String[] headers = { "Time", "Distance", "Altitude", "Date", "Altitude Gained", "Altitude Lost" };
+					JTable dataTable = new JTable(data,headers);
+					loggedInView.add(dataTable);
+					loggedInView.revalidate();
+					loggedInView.repaint();
+					
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 					
 		});
+        
+        
         
         
         
