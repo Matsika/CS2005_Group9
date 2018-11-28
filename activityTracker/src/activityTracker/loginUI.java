@@ -2,7 +2,6 @@ package activityTracker;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -109,7 +108,7 @@ public class loginUI {
 				ReadCSV reader = new ReadCSV();
 				
 				try {
-					Object[][] data = ReadCSV.read();
+					String[][] data = ReadCSV.read();
 					System.out.println(data[0][0].toString());
 					System.out.println(data[1].toString());
 					String[] headers = { "Time",
@@ -120,10 +119,13 @@ public class loginUI {
 							"Altitude Lost" };
 					
 					JTable dataTable = new JTable(data,headers);
+					JScrollPane scrollPane = new JScrollPane(dataTable);
 					
-					loggedInView.add(dataTable);
-					loggedInView.revalidate();
+					scrollPane.getViewport().add(dataTable);
+					
+					
 					loggedInView.repaint();
+					loggedInView.revalidate();
 					
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block

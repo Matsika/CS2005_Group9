@@ -25,7 +25,8 @@ public class ReadCSV
     	int count = 0;
     	//I used the path where the file is located in my computer
     	//can change the path
-    	File myFile = new File("C:\\Users\\macp1\\git\\final\\project\\activityTracker\\src\\activityTracker\\InputFormat.csv");
+    	//File myFile = new File("C:\\Users\\macp1\\git\\final\\project\\activityTracker\\src\\activityTracker\\InputFormat.csv");
+    	File myFile = new File("/Users/TinotendaMatsika/git/CS2005_Group9FinalP/activityTracker/src/activityTracker/InputFormat.csv");
     	BufferedReader fileReader= null;
         try
         {
@@ -54,14 +55,14 @@ public class ReadCSV
             {	
             	
             	
-            	System.out.println("1");
+            	//System.out.println("1");
             	if(prevAlt < data.getAltitude()) {
             		altUp += data.getAltitude() - prevAlt;
             		System.out.println(Double.toString(altUp));
            		}
            		else {
            			altDown += prevAlt - data.getAltitude();
-           			System.out.println("3");
+           			//System.out.println("3");
            		}
            		prevAlt = data.getAltitude();
             	
@@ -90,7 +91,7 @@ public class ReadCSV
                 return runs;
 
             }
-            catch(IOException e)
+            catch(final IOException e)
             {
                 System.out.println("Error while closing fileReader !!!");
                 e.printStackTrace();
