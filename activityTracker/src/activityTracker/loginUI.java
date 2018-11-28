@@ -9,6 +9,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -108,9 +109,11 @@ public class loginUI {
 				ReadCSV reader = new ReadCSV();
 				
 				try {
+					
 					String[][] data = ReadCSV.read();
-					System.out.println(data[0][0].toString());
-					System.out.println(data[1].toString());
+					
+					//System.out.println(data[0][0].toString());
+					//System.out.println(data[1].toString());
 					String[] headers = { "Time",
 							"Distance",
 							"Altitude", 
@@ -119,11 +122,8 @@ public class loginUI {
 							"Altitude Lost" };
 					
 					JTable dataTable = new JTable(data,headers);
-					JScrollPane scrollPane = new JScrollPane(dataTable);
 					
-					scrollPane.getViewport().add(dataTable);
-					
-					
+					loggedInView.add(dataTable);
 					loggedInView.repaint();
 					loggedInView.revalidate();
 					

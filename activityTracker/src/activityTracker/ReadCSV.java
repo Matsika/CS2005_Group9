@@ -53,16 +53,13 @@ public class ReadCSV
         	Double altDown = 0.0;
             for(ActivityData data: activeData)
             {	
-            	
-            	
-            	//System.out.println("1");
             	if(prevAlt < data.getAltitude()) {
             		altUp += data.getAltitude() - prevAlt;
             		System.out.println(Double.toString(altUp));
            		}
            		else {
            			altDown += prevAlt - data.getAltitude();
-           			//System.out.println("3");
+           			
            		}
            		prevAlt = data.getAltitude();
             	
