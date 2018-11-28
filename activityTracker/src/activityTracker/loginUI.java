@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 //import ReadCSV;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 //test
@@ -64,6 +65,10 @@ public class loginUI {
         Synchronize.setFont(new Font("Serif",Font.PLAIN,27));
         loggedInView.add(Synchronize, BorderLayout.NORTH);
         frame.add(loggedInView);
+        JButton sortByNew = new JButton("Newest First");
+        sortByNew.setFont(new Font("Serif",Font.PLAIN,27)); 
+        JButton sortByDistance = new JButton("Farthest First");
+        sortByDistance.setFont(new Font("Serif",Font.PLAIN,27));
         
         CreateAccount.addActionListener(new ActionListener()
 		{
@@ -95,26 +100,38 @@ public class loginUI {
         Synchronize.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent click) {
-				ReadCSV reader = new ReadCSV();
 				
 				try {
 					String data[][] = ReadCSV.read();
-					System.out.println(data[0][0].toString());
-					System.out.println(data[1].toString());
 					String[] headers = { "Time", "Distance", "Altitude", "Date", "Altitude Gained", "Altitude Lost" };
-					JTable dataTable = new JTable(data,headers);
+					String[][] headersList = {headers};
+					System.out.println(data[0].length);
+					System.out.println(headers.length);
+					JTable header = new JTable(headersList, headers);
+					JTable dataTable = new JTable(data, headers);
+					loggedInView.remove(Synchronize);
+					loggedInView.add(sortByDistance);
+					loggedInView.add(header);
 					loggedInView.add(dataTable);
 					loggedInView.revalidate();
 					loggedInView.repaint();
+					String[][] newestFirst = data;
 					
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 			}
+			
 					
 		});
+        
+       
+		
+        
+        
+        
+        
         
         
         

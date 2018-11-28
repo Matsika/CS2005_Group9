@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.stream.Stream; 
 
 public class ReadCSV 
 {
@@ -22,7 +24,7 @@ public class ReadCSV
    
     public static String[][] read() throws FileNotFoundException 
     {	
-    	String[][] runs = new String[10][10];
+    	String[][] runs = new String[3][6];
     	int count = 0;
     	//I used the path where the file is located in my computer
     	//can change the path
@@ -67,7 +69,8 @@ public class ReadCSV
            		prevAlt = data.getAltitude();
             	
             	if (data.getElapsedTime() == 150) {
-            		runs[count] = data.justData();
+            		String[] thingy = {Integer.toString(data.getElapsedTime()), Integer.toString(data.getDistance()), Double.toString(data.getAltitude()), data.getDate(), Double.toString(altUp), Double.toString(altDown)};
+            		runs[count] = thingy;
                     //System.out.println(runs[count].toString());
                     count++;
                     prevAlt = 0.0;
@@ -87,6 +90,7 @@ public class ReadCSV
         {
             try
             {
+            	System.out.println(runs[0][1]);
                 fileReader.close();
                 return runs;
 
