@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.Stream; 
 
 public class ReadCSV 
@@ -22,15 +23,37 @@ public class ReadCSV
     	
     }
    
-    public static String[][] read() throws FileNotFoundException 
+    public static String[][] read(boolean byDate) throws FileNotFoundException 
     {	
-    	String[][] runs = new String[3][6];
+    	;
     	int count = 0;
+    	int entryCount = 1;
     	//I used the path where the file is located in my computer
     	//can change the path
     	File myFile = new File("C:\\Users\\macp1\\git\\final\\project\\activityTracker\\src\\activityTracker\\InputFormat.csv");
     	BufferedReader fileReader= null;
-        try
+        
+    	try {
+    		String line = "";
+            fileReader = new BufferedReader(new FileReader(myFile));
+            fileReader.readLine();
+            while((line = fileReader.readLine()) != null)
+            {
+            	System.out.println(line.split(COMMA_DELIMITER)[0]);
+            	if(line.split(COMMA_DELIMITER)[0].equals("0")){
+            		System.out.println("entry:" + entryCount);
+            		entryCount++; 
+            	}
+                
+            }
+            
+    	}catch(Exception e) {
+    		System.out.println("nope");
+    	}
+    	
+    	String[][] runs = new String[entryCount][6];
+    	
+    	try
         {
             ArrayList<ActivityData> activeData = new ArrayList<ActivityData>();
             
@@ -57,21 +80,17 @@ public class ReadCSV
             {	
             	
             	
-            	System.out.println("1");
             	if(prevAlt < data.getAltitude()) {
             		altUp += data.getAltitude() - prevAlt;
-            		System.out.println(Double.toString(altUp));
            		}
            		else {
            			altDown += prevAlt - data.getAltitude();
-           			System.out.println("3");
            		}
            		prevAlt = data.getAltitude();
             	
             	if (data.getElapsedTime() == 150) {
             		String[] thingy = {Integer.toString(data.getElapsedTime()), Integer.toString(data.getDistance()), Double.toString(data.getAltitude()), data.getDate(), Double.toString(altUp), Double.toString(altDown)};
             		runs[count] = thingy;
-                    //System.out.println(runs[count].toString());
                     count++;
                     prevAlt = 0.0;
                     altUp = 0.0;
@@ -92,7 +111,12 @@ public class ReadCSV
             {
             	System.out.println(runs[0][1]);
                 fileReader.close();
-                return runs;
+                if(byDate) {
+                	return runs;
+                }
+                else {
+                	return inOrder(runs);
+                }
 
             }
             catch(IOException e)
@@ -103,6 +127,23 @@ public class ReadCSV
             }
         }//
     
+    }
+    public static String[][] inOrder(String[][] data){
+    	String[][] newArray = new String[data.length][data[0].length];
+    	ArrayList<Integer> distances = new ArrayList<Integer>();
+    	int nextVal = 0;
+    	for(int i=0; i<data.length;i++) {
+    		distances.add(Integer.parseInt(data[i][1]));
+    	}
+    	for(int j = 0;j<data.length;j++) {
+    		nextVal = distances.indexOf(Collections.max(distances));
+    		newArray[j] = data[nextVal];
+    		distances.set(distances.indexOf(Collections.max(distances)), -1);
+    	}
+    	
+    	return newArray;
+    	
+    	
     }
     
     

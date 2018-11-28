@@ -102,7 +102,7 @@ public class loginUI {
 			public void actionPerformed(ActionEvent click) {
 				
 				try {
-					String data[][] = ReadCSV.read();
+					String data[][] = ReadCSV.read(true);
 					String[] headers = { "Time", "Distance", "Altitude", "Date", "Altitude Gained", "Altitude Lost" };
 					String[][] headersList = {headers};
 					System.out.println(data[0].length);
@@ -115,7 +115,6 @@ public class loginUI {
 					loggedInView.add(dataTable);
 					loggedInView.revalidate();
 					loggedInView.repaint();
-					String[][] newestFirst = data;
 					
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -129,7 +128,61 @@ public class loginUI {
        
 		
         
+        sortByDistance.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click) {
+				try {
+					String data[][] = ReadCSV.read(false);
+					String[] headers = { "Time", "Distance", "Altitude", "Date", "Altitude Gained", "Altitude Lost" };
+					System.out.println(data[0].length);
+					System.out.println(headers.length);
+					String[][] headersList = {headers};
+					JTable header = new JTable(headersList, headers);
+					JTable dataTable = new JTable(data, headers);
+					loggedInView.removeAll();
+					loggedInView.add(sortByNew);
+					loggedInView.add(header);
+					loggedInView.add(dataTable);
+					loggedInView.revalidate();
+					loggedInView.repaint();
+					
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			
+					
+		});
         
+        sortByNew.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click) {
+				try {
+					String data[][] = ReadCSV.read(true);
+					String[] headers = { "Time", "Distance", "Altitude", "Date", "Altitude Gained", "Altitude Lost" };
+					System.out.println(data[0].length);
+					System.out.println(headers.length);
+					String[][] headersList = {headers};
+					JTable header = new JTable(headersList, headers);
+					JTable dataTable = new JTable(data, headers);
+					loggedInView.removeAll();
+					loggedInView.add(sortByDistance);
+					loggedInView.add(header);
+					loggedInView.add(dataTable);
+					loggedInView.revalidate();
+					loggedInView.repaint();
+					
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			
+					
+		});
         
         
         
@@ -161,6 +214,9 @@ public class loginUI {
 	public static void createAccount(String username, String password) {
 		CreateAccount next = new CreateAccount(username , password,0,0,0);
 	}
-        
+    
+	
+	
+	
 }
 
