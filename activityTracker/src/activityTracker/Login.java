@@ -61,9 +61,6 @@ public class Login {
             	   in.close();
             	   return true;
                }
-               else {
-            	   System.out.println(splitted[0] + this.userName);
-               }
            } 
            in.close();
         } 

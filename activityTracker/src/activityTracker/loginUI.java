@@ -74,6 +74,18 @@ public class loginUI {
 		{
 			public void actionPerformed(ActionEvent click) {
 				createAccount(usernameTextField.getText(), passwordTextField.getText());
+				if(logIn(usernameTextField.getText(), passwordTextField.getText())) {
+					textFields.setVisible(false);
+					button.setVisible(false);
+					loggedInView.setEnabled(true);
+					frame.add(loggedInView);
+					loggedInView.add(Synchronize);
+					frame.repaint();
+				}else {
+					usernameTextField.setText("");
+				}
+				
+				
 			}
 					
 		});
@@ -82,7 +94,6 @@ public class loginUI {
 		{
 			public void actionPerformed(ActionEvent click) {
 				if(logIn(usernameTextField.getText(), passwordTextField.getText())) {
-					System.out.println("here");
 					textFields.setVisible(false);
 					button.setVisible(false);
 					loggedInView.setEnabled(true);
@@ -90,9 +101,11 @@ public class loginUI {
 					loggedInView.add(Synchronize);
 					frame.repaint();
 					
-					
-					
+				}else {
+					usernameTextField.setText("");
 				}
+				
+				
 			}
 					
 		});
@@ -105,8 +118,6 @@ public class loginUI {
 					String data[][] = ReadCSV.read(true);
 					String[] headers = { "Time", "Distance", "Altitude", "Date", "Altitude Gained", "Altitude Lost" };
 					String[][] headersList = {headers};
-					System.out.println(data[0].length);
-					System.out.println(headers.length);
 					JTable header = new JTable(headersList, headers);
 					JTable dataTable = new JTable(data, headers);
 					loggedInView.remove(Synchronize);
@@ -134,8 +145,6 @@ public class loginUI {
 				try {
 					String data[][] = ReadCSV.read(false);
 					String[] headers = { "Time", "Distance", "Altitude", "Date", "Altitude Gained", "Altitude Lost" };
-					System.out.println(data[0].length);
-					System.out.println(headers.length);
 					String[][] headersList = {headers};
 					JTable header = new JTable(headersList, headers);
 					JTable dataTable = new JTable(data, headers);
@@ -162,8 +171,6 @@ public class loginUI {
 				try {
 					String data[][] = ReadCSV.read(true);
 					String[] headers = { "Time", "Distance", "Altitude", "Date", "Altitude Gained", "Altitude Lost" };
-					System.out.println(data[0].length);
-					System.out.println(headers.length);
 					String[][] headersList = {headers};
 					JTable header = new JTable(headersList, headers);
 					JTable dataTable = new JTable(data, headers);

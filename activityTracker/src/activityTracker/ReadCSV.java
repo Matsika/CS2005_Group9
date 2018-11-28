@@ -41,14 +41,12 @@ public class ReadCSV
             {
             	System.out.println(line.split(COMMA_DELIMITER)[0]);
             	if(line.split(COMMA_DELIMITER)[0].equals("0")){
-            		System.out.println("entry:" + entryCount);
             		entryCount++; 
             	}
                 
             }
             
     	}catch(Exception e) {
-    		System.out.println("nope");
     	}
     	
     	String[][] runs = new String[entryCount][6];
@@ -109,7 +107,6 @@ public class ReadCSV
         {
             try
             {
-            	System.out.println(runs[0][1]);
                 fileReader.close();
                 if(byDate) {
                 	return runs;
