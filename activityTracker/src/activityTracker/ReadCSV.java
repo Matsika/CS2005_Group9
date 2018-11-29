@@ -18,19 +18,21 @@ public class ReadCSV
     private static final int DISTANCE = 1;
     private static final int ALTITUDE = 2;
     private static final int DATE = 3;
+    String file = "";
     
     public ReadCSV() {
     	
     }
-   
-    public static String[][] read(boolean byDate) throws FileNotFoundException 
+    
+    public static String[][] read(boolean byDate, String path) throws FileNotFoundException 
     {	
     	;
+    	
     	int count = 0;
     	int entryCount = 1;
     	//I used the path where the file is located in my computer
     	//can change the path
-    	File myFile = new File("C:\\Users\\macp1\\git\\final\\project\\activityTracker\\src\\activityTracker\\InputFormat.csv");
+    	File myFile = new File(path);
     	BufferedReader fileReader= null;
         
     	try {

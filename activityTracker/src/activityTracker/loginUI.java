@@ -2,6 +2,7 @@
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -17,12 +18,14 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.filechooser.*;
 
 //test
 
 public class loginUI {
+	String file = "";
 	
-	public static void main(String[]args) {
+	public void run() {
 		JFrame frame = new JFrame("Activity Tracker");
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,6 +44,11 @@ public class loginUI {
         
         button.add(Login);
 		
+		double avgTime;
+		double avgDistance;
+		double avgPace;
+		double avgAltGained;
+		double avgAltLost;
 		
         
         JPanel textFields = new JPanel();
@@ -69,6 +77,77 @@ public class loginUI {
         sortByNew.setFont(new Font("Serif",Font.PLAIN,27)); 
         JButton sortByDistance = new JButton("Farthest First");
         sortByDistance.setFont(new Font("Serif",Font.PLAIN,27));
+        JButton findFile = new JButton("Find File");
+        findFile.setFont(new Font("Serif",Font.PLAIN,27));
+        
+        findFile.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click) {
+				JFileChooser chooser = new JFileChooser();
+		        //FileNameExtensionFilter filter = new FileNameExtensionFilter(
+		        //  );
+		        //chooser.setFileFilter(filter);
+		        int returnVal = chooser.showOpenDialog(null);
+		        if(returnVal == JFileChooser.APPROVE_OPTION) {
+		            System.out.println("You chose to open this file: " +
+		                    chooser.getSelectedFile().getName());
+		            		file= chooser.getSelectedFile().getPath();
+		        };
+		        
+					
+					
+					
+					
+					
+					double avgTime =0;
+					double avgDistance = 0;
+					double avgPace = 0;
+					double avgAltGained = 0;
+					double avgAltLost = 0;
+					try {
+						String data[][] = ReadCSV.read(true, chooser.getSelectedFile().getPath());
+						String[] headers = { "Time", "Distance", "Final Altitude", "Date", "Altitude Gained", "Altitude Lost" };
+						String[][] headersList = {headers};
+						JTable header = new JTable(headersList, headers);
+						JTable dataTable = new JTable(data, headers);
+						loggedInView.remove(findFile);
+						loggedInView.remove(Synchronize);
+						loggedInView.add(sortByDistance);
+						loggedInView.add(header);
+						loggedInView.add(dataTable);
+						int j = 0;
+						for(int i=0;i<data.length;i++) {
+							avgTime += Double.parseDouble(data[i][0]);
+							avgDistance +=Double.parseDouble(data[i][2]);
+							avgAltGained += Double.parseDouble(data[i][4]);
+							avgAltLost += Double.parseDouble(data[i][5]);
+							j++;
+						}
+						avgTime = avgTime/j;
+						avgDistance = avgDistance/j;
+						avgAltGained = avgAltGained/j;
+						avgAltLost = avgAltLost/j;
+						avgPace = avgTime/avgDistance;
+						
+						String[][] averages = {{Double.toString(avgTime),Double.toString(avgDistance),Double.toString(avgAltGained),Double.toString(avgAltLost), Double.toString(avgPace)}};
+						String[][] averagesHeader = {{"Average Time", "Average Distance", "Average Altitude Gained", "Average Altitude Lost", "Average Pace"}};
+						JTable Averages = new JTable(averagesHeader, averagesHeader[0]);
+						JTable averagesData = new JTable(averages, averagesHeader[0]);
+						loggedInView.add(Averages);
+						loggedInView.add(averagesData);
+						loggedInView.revalidate();
+						loggedInView.repaint();
+						
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				
+			}
+					
+		);
         
         CreateAccount.addActionListener(new ActionListener()
 		{
@@ -98,8 +177,10 @@ public class loginUI {
 					button.setVisible(false);
 					loggedInView.setEnabled(true);
 					frame.add(loggedInView);
-					loggedInView.add(Synchronize);
-					frame.repaint();
+					loggedInView.add(findFile);
+					loggedInView.remove(Synchronize);
+					loggedInView.revalidate();
+					loggedInView.repaint();
 					
 				}else {
 					usernameTextField.setText("");
@@ -114,16 +195,46 @@ public class loginUI {
 		{
 			public void actionPerformed(ActionEvent click) {
 				
+				
+				
+				
+				
+				double avgTime =0;
+				double avgDistance = 0;
+				double avgPace = 0;
+				double avgAltGained = 0;
+				double avgAltLost = 0;
 				try {
-					String data[][] = ReadCSV.read(true);
-					String[] headers = { "Time", "Distance", "Altitude", "Date", "Altitude Gained", "Altitude Lost" };
+					String data[][] = ReadCSV.read(true, file);
+					String[] headers = { "Time", "Distance", "Final Altitude", "Date", "Altitude Gained", "Altitude Lost" };
 					String[][] headersList = {headers};
 					JTable header = new JTable(headersList, headers);
 					JTable dataTable = new JTable(data, headers);
+					loggedInView.remove(findFile);
 					loggedInView.remove(Synchronize);
 					loggedInView.add(sortByDistance);
 					loggedInView.add(header);
 					loggedInView.add(dataTable);
+					int j = 0;
+					for(int i=0;i<data.length;i++) {
+						avgTime += Double.parseDouble(data[i][0]);
+						avgDistance +=Double.parseDouble(data[i][2]);
+						avgAltGained += Double.parseDouble(data[i][4]);
+						avgAltLost += Double.parseDouble(data[i][5]);
+						j++;
+					}
+					avgTime = avgTime/j;
+					avgDistance = avgDistance/j;
+					avgAltGained = avgAltGained/j;
+					avgAltLost = avgAltLost/j;
+					avgPace = avgTime/avgDistance;
+					
+					String[][] averages = {{Double.toString(avgTime),Double.toString(avgDistance),Double.toString(avgAltGained),Double.toString(avgAltLost), Double.toString(avgPace)}};
+					String[][] averagesHeader = {{"Average Time", "Average Distance", "Average Altitude Gained", "Average Altitude Lost", "Average Pace"}};
+					JTable Averages = new JTable(averagesHeader, averagesHeader[0]);
+					JTable averagesData = new JTable(averages, averagesHeader[0]);
+					loggedInView.add(Averages);
+					loggedInView.add(averagesData);
 					loggedInView.revalidate();
 					loggedInView.repaint();
 					
@@ -143,8 +254,15 @@ public class loginUI {
 		{
 			public void actionPerformed(ActionEvent click) {
 				try {
-					String data[][] = ReadCSV.read(false);
-					String[] headers = { "Time", "Distance", "Altitude", "Date", "Altitude Gained", "Altitude Lost" };
+					
+					double avgTime =0;
+					double avgDistance = 0;
+					double avgPace = 0;
+					double avgAltGained = 0;
+					double avgAltLost = 0;
+					
+					String data[][] = ReadCSV.read(false, file);
+					String[] headers = { "Time", "Distance", "Final Altitude", "Date", "Altitude Gained", "Altitude Lost" };
 					String[][] headersList = {headers};
 					JTable header = new JTable(headersList, headers);
 					JTable dataTable = new JTable(data, headers);
@@ -152,8 +270,30 @@ public class loginUI {
 					loggedInView.add(sortByNew);
 					loggedInView.add(header);
 					loggedInView.add(dataTable);
+					
+					int j = 0;
+					for(int i=0;i<data.length;i++) {
+						avgTime += Double.parseDouble(data[i][0]);
+						avgDistance +=Double.parseDouble(data[i][2]);
+						avgAltGained += Double.parseDouble(data[i][4]);
+						avgAltLost += Double.parseDouble(data[i][5]);
+						j++;
+					}
+					avgTime = avgTime/j;
+					avgDistance = avgDistance/j;
+					avgAltGained = avgAltGained/j;
+					avgAltLost = avgAltLost/j;
+					avgPace = avgTime/avgDistance;
+					
+					String[][] averages = {{Double.toString(avgTime),Double.toString(avgDistance),Double.toString(avgAltGained),Double.toString(avgAltLost), Double.toString(avgPace)}};
+					String[][] averagesHeader = {{"Average Time", "Average Distance", "Average Altitude Gained", "Average Altitude Lost", "Average Pace"}};
+					JTable Averages = new JTable(averagesHeader, averagesHeader[0]);
+					JTable averagesData = new JTable(averages, averagesHeader[0]);
+					loggedInView.add(Averages);
+					loggedInView.add(averagesData);
 					loggedInView.revalidate();
 					loggedInView.repaint();
+					
 					
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -169,8 +309,16 @@ public class loginUI {
 		{
 			public void actionPerformed(ActionEvent click) {
 				try {
-					String data[][] = ReadCSV.read(true);
-					String[] headers = { "Time", "Distance", "Altitude", "Date", "Altitude Gained", "Altitude Lost" };
+					
+					double avgTime =0;
+					double avgDistance = 0;
+					double avgPace = 0;
+					double avgAltGained = 0;
+					double avgAltLost = 0;
+					
+					
+					String data[][] = ReadCSV.read(true, file);
+					String[] headers = { "Time", "Distance", "Final Altitude", "Date", "Altitude Gained", "Altitude Lost" };
 					String[][] headersList = {headers};
 					JTable header = new JTable(headersList, headers);
 					JTable dataTable = new JTable(data, headers);
@@ -178,6 +326,28 @@ public class loginUI {
 					loggedInView.add(sortByDistance);
 					loggedInView.add(header);
 					loggedInView.add(dataTable);
+					loggedInView.revalidate();
+					
+					int j = 0;
+					for(int i=0;i<data.length;i++) {
+						avgTime += Double.parseDouble(data[i][0]);
+						avgDistance +=Double.parseDouble(data[i][2]);
+						avgAltGained += Double.parseDouble(data[i][4]);
+						avgAltLost += Double.parseDouble(data[i][5]);
+						j++;
+					}
+					avgTime = avgTime/j;
+					avgDistance = avgDistance/j;
+					avgAltGained = avgAltGained/j;
+					avgAltLost = avgAltLost/j;
+					avgPace = avgTime/avgDistance;
+					
+					String[][] averages = {{Double.toString(avgTime),Double.toString(avgDistance),Double.toString(avgAltGained),Double.toString(avgAltLost), Double.toString(avgPace)}};
+					String[][] averagesHeader = {{"Average Time", "Average Distance", "Average Altitude Gained", "Average Altitude Lost", "Average Pace"}};
+					JTable Averages = new JTable(averagesHeader, averagesHeader[0]);
+					JTable averagesData = new JTable(averages, averagesHeader[0]);
+					loggedInView.add(Averages);
+					loggedInView.add(averagesData);
 					loggedInView.revalidate();
 					loggedInView.repaint();
 					
@@ -190,6 +360,8 @@ public class loginUI {
 			
 					
 		});
+        
+        
         
         
         
@@ -225,5 +397,9 @@ public class loginUI {
 	
 	
 	
-}
+
+
+
+	}
+
 
